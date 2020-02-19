@@ -1,4 +1,4 @@
-<!-- Testing the project in develop-->
+<!-- Stash testing -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -16,7 +16,74 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <finalName>test</finalName>
-  </build>
+
+<profiles>
+<profile>
+<id>dev</id>
+<activation>
+      <activeByDefault>true</activeByDefault>
+</activation>
+<build>
+ <finalName>test</finalName>    
+<plugins>
+  <plugin>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>3.1.0</version>
+     <executions>
+       <execution>
+         <id>copy-resources</id>
+          <phase>validate</phase>
+          <goals>
+              <goal>copy-resources</goal>
+          </goals>
+            <configuration>
+              <outputDirectory>target/test/</outputDirectory>
+              <resources>          
+                <resource>
+                  <directory>src/dev/</directory>
+                  <filtering>true</filtering>
+              </resource>
+            </resources>              
+          </configuration>            
+       </execution>
+    </executions>
+  </plugin>
+</plugins>
+ </build>
+</profile>
+
+<profile>
+<id>qa</id>
+<activation>
+      <activeByDefault>true</activeByDefault>
+</activation>
+<build>
+ <finalName>test</finalName>
+<plugins>
+  <plugin>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>3.1.0</version>
+     <executions>
+       <execution>
+         <id>copy-resources</id>
+          <phase>validate</phase>
+          <goals>
+              <goal>copy-resources</goal>
+          </goals>
+            <configuration>
+              <outputDirectory>target/test/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/qa/</directory>
+                  <filtering>true</filtering>
+              </resource>
+            </resources>
+          </configuration>
+       </execution>
+    </executions>
+  </plugin>
+</plugins>
+ </build>
+</profile>
+</profiles>
 </project>
